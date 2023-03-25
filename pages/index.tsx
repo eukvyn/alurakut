@@ -30,53 +30,69 @@ function ProfileSidebar(propriedades) {
 
 export default function Home() {
   const githubUser = 'eukvyn'
-  interface Community {
-    id: string
-    title: string | File
-    image: string | File
-  }
-
-  const communityDefault: Community = {
-    id: 'ad210837120376120g',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',
-  }
-
-  const [comunidades, setComunidades] = React.useState<Community[] | null>([communityDefault])
-
+  const [communities, setCommunities] = React.useState([])
   const [followers, setFollowers] = React.useState([])
-
-  React.useEffect(() => {
-    fetch(`https://api.github.com/users/${githubUser}/followers`).then((response) => {
-      return response.json()
-    }).then((response) => {
-      let _followers = []
-      response.map((follower) => {
-        _followers.push({
-          id: follower.id,
-          title: follower.login,
-          image: follower.avatar_url,
-        })
-      })
-      setFollowers(_followers)
-    })
-  }, [])
-
   const [followersAlura, setFollowersAlura] = React.useState([])
 
   React.useEffect(() => {
-    fetch('https://api.github.com/users/alura-challenges/followers?since=70335282').then((response) => {
-      return response.json()
-    }).then((response) => {
-      let _followers = []
-      response.map((follower) => {
-        _followers.push({
-          id: follower.id,
-          title: follower.login,
-          image: follower.avatar_url,
-        })
+    // GET followers githubUser
+    fetch(`https://api.github.com/users/${githubUser}/followers`)
+      .then((response) => {
+        return response.json()
       })
-      setFollowersAlura(_followers)
+      .then((response) => {
+        let _followers = []
+        response.map((follower) => {
+          _followers.push({
+            id: follower.id,
+            title: follower.login,
+            imageUrl: follower.avatar_url,
+          })
+        })
+        setFollowers(_followers)
+      })
+
+    // GET followers Alura Community
+    fetch(
+      'https://api.github.com/users/alura-challenges/followers?since=70335282'
+    )
+      .then((response) => {
+        return response.json()
+      })
+      .then((response) => {
+        let _followers = []
+        response.map((follower) => {
+          _followers.push({
+            id: follower.id,
+            title: follower.login,
+            imageUrl: follower.avatar_url,
+          })
+        })
+        setFollowersAlura(_followers)
+      })
+
+    //? API GraphQL
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '50b5fd0560cbd22ceff514f545e116',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `# GraphQl - Qraph Query Lancguage
+        query {
+          allCommunities {
+            title
+            id
+            imageUrl
+            creatorSlug
+          }
+        }`,
+      }),
+    }).then((response) => response.json()).then((response) => {
+      const communitiesDato = response.data.allCommunities
+      setCommunities(communitiesDato)
     })
   }, [])
 
@@ -104,14 +120,14 @@ export default function Home() {
                 e.preventDefault()
                 const dadosDoForm = new FormData(e.currentTarget)
 
-                const communityInput: Community = {
+                const communityInput = {
                   id: new Date().toISOString(),
                   title: dadosDoForm.get('title'),
-                  image: dadosDoForm.get('image'),
+                  imageUrl: dadosDoForm.get('image'),
                 }
 
-                const comunidadesAtualizadas = [...comunidades, communityInput]
-                setComunidades(comunidadesAtualizadas)
+                const communitiesUpdate = [...communities, communityInput]
+                setCommunities(communitiesUpdate)
               }}>
               <div>
                 <input
@@ -136,14 +152,17 @@ export default function Home() {
           className='profileRelationsArea'
           style={{ gridArea: 'profileRelationsArea' }}>
           <CommunityBox
+          category="users"
             title='Seguidores'
             list={followers}
           />
           <CommunityBox
+            category="communities"
             title='Comunidades'
-            list={comunidades}
+            list={communities}
           />
           <CommunityBox
+            category="communities"
             title='Seguidores da Comunidade Alura'
             list={followersAlura}
           />
