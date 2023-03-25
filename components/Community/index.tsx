@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProfileRelationsBoxWrapper } from '../'
 
-function CommunityBox({ title, list }) {
+function CommunityBox({ category, title, list }) {
     
     const reduceList = list.slice(0, 6)
 
@@ -15,8 +15,8 @@ function CommunityBox({ title, list }) {
             {reduceList.map((itemAtual) => {
                 return (
                 <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`}>
-                    <img src={itemAtual.image} />
+                    <a href={`/${category}/${itemAtual.id}`}>
+                    <img src={itemAtual.imageUrl} />
                     <span>{itemAtual.title}</span>
                     </a>
                 </li>
