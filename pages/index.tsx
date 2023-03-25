@@ -1,16 +1,14 @@
 import React from 'react'
-import MainGrid from '../components/MainGrid'
-import Box from '../components/Box'
+import { Box, CommunityBox, MainGrid } from '../components'
 import {
   AlurakutMenu,
   AlurakutProfileSidebarMenuDefault,
   OrkutNostalgicIconSet,
 } from '../lib/AlurakutCommons'
-import { ProfileRelationsBoxWrapper } from '../components/ProfileRelations'
 
 function ProfileSidebar(propriedades) {
   return (
-    <Box as="aside">
+    <Box as='aside'>
       <img
         src={`https://github.com/${propriedades.githubUser}.png`}
         style={{ borderRadius: '8px' }}
@@ -32,18 +30,51 @@ function ProfileSidebar(propriedades) {
 
 export default function Home() {
   const githubUser = 'eukvyn'
-  const [comunidades, setComunidades] = React.useState([{
+  interface Community {
+    id: string
+    title: string | File
+    image: string | File
+  }
+
+  const communityDefault: Community = {
     id: 'ad210837120376120g',
     title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }])
+    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',
+  }
+
+  const [comunidades, setComunidades] = React.useState<Community[] | null>([communityDefault])
+
   const pessoasFavoritas = [
-    'juunegreiros',
-    'omariosouto',
-    'peas',
-    'rafaballerini',
-    'marcobrunodev',
-    'wesleyaju',
+    {
+      id: new Date().toISOString(),
+      title: 'juunegreiros',
+      image: `https://github.com/juunegreiros.png`,
+    },
+    {
+      id: new Date().toISOString(),
+      title: 'omariosouto',
+      image: `https://github.com/omariosouto.png`,
+    },
+    {
+      id: new Date().toISOString(),
+      title: 'peas',
+      image: `https://github.com/peas.png`,
+    },
+    {
+      id: new Date().toISOString(),
+      title: 'rafaballerini',
+      image: `https://github.com/rafaballerini.png`,
+    },
+    {
+      id: new Date().toISOString(),
+      title: 'marcobrunodev',
+      image: `https://github.com/marcobrunodev.png`,
+    },
+    {
+      id: new Date().toISOString(),
+      title: 'wesleyaju',
+      image: `https://github.com/wesleyaju.png`,
+    }
   ]
 
   return (
@@ -70,13 +101,13 @@ export default function Home() {
                 e.preventDefault()
                 const dadosDoForm = new FormData(e.currentTarget)
 
-                const comunidade = {
+                const communityInput: Community = {
                   id: new Date().toISOString(),
                   title: dadosDoForm.get('title'),
-                  image: dadosDoForm.get('image')
+                  image: dadosDoForm.get('image'),
                 }
 
-                const comunidadesAtualizadas = [...comunidades, comunidade]
+                const comunidadesAtualizadas = [...comunidades, communityInput]
                 setComunidades(comunidadesAtualizadas)
               }}>
               <div>
@@ -101,42 +132,14 @@ export default function Home() {
         <div
           className='profileRelationsArea'
           style={{ gridArea: 'profileRelationsArea' }}>
-          <ProfileRelationsBoxWrapper>
-            <h2 className='smallTitle'>
-              Comunidades ({comunidades.length})
-            </h2>
-
-            <ul>
-              {comunidades.map((itemAtual) => {
-                return (
-                  <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`}>
-                      <img src={itemAtual.image} />
-                      <span>{itemAtual.title}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </ProfileRelationsBoxWrapper>
-          <ProfileRelationsBoxWrapper>
-            <h2 className='smallTitle'>
-              Pessoas da comunidade ({pessoasFavoritas.length})
-            </h2>
-
-            <ul>
-              {pessoasFavoritas.map((itemAtual) => {
-                return (
-                  <li key={itemAtual}>
-                    <a href={`/users/${itemAtual}`}>
-                      <img src={`https://github.com/${itemAtual}.png`} />
-                      <span>{itemAtual}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </ProfileRelationsBoxWrapper>
+          <CommunityBox
+            title='Comunidades'
+            list={comunidades}
+          />
+          <CommunityBox
+            title='Pessoas da comunidade'
+            list={pessoasFavoritas}
+          />
         </div>
       </MainGrid>
     </>
