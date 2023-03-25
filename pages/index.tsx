@@ -44,38 +44,41 @@ export default function Home() {
 
   const [comunidades, setComunidades] = React.useState<Community[] | null>([communityDefault])
 
-  const pessoasFavoritas = [
-    {
-      id: new Date().toISOString(),
-      title: 'juunegreiros',
-      image: `https://github.com/juunegreiros.png`,
-    },
-    {
-      id: new Date().toISOString(),
-      title: 'omariosouto',
-      image: `https://github.com/omariosouto.png`,
-    },
-    {
-      id: new Date().toISOString(),
-      title: 'peas',
-      image: `https://github.com/peas.png`,
-    },
-    {
-      id: new Date().toISOString(),
-      title: 'rafaballerini',
-      image: `https://github.com/rafaballerini.png`,
-    },
-    {
-      id: new Date().toISOString(),
-      title: 'marcobrunodev',
-      image: `https://github.com/marcobrunodev.png`,
-    },
-    {
-      id: new Date().toISOString(),
-      title: 'wesleyaju',
-      image: `https://github.com/wesleyaju.png`,
-    }
-  ]
+  const [followers, setFollowers] = React.useState([])
+
+  React.useEffect(() => {
+    fetch(`https://api.github.com/users/${githubUser}/followers`).then((response) => {
+      return response.json()
+    }).then((response) => {
+      let _followers = []
+      response.map((follower) => {
+        _followers.push({
+          id: follower.id,
+          title: follower.login,
+          image: follower.avatar_url,
+        })
+      })
+      setFollowers(_followers)
+    })
+  }, [])
+
+  const [followersAlura, setFollowersAlura] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://api.github.com/users/alura-challenges/followers?since=70335282').then((response) => {
+      return response.json()
+    }).then((response) => {
+      let _followers = []
+      response.map((follower) => {
+        _followers.push({
+          id: follower.id,
+          title: follower.login,
+          image: follower.avatar_url,
+        })
+      })
+      setFollowersAlura(_followers)
+    })
+  }, [])
 
   return (
     <>
@@ -133,12 +136,16 @@ export default function Home() {
           className='profileRelationsArea'
           style={{ gridArea: 'profileRelationsArea' }}>
           <CommunityBox
+            title='Seguidores'
+            list={followers}
+          />
+          <CommunityBox
             title='Comunidades'
             list={comunidades}
           />
           <CommunityBox
-            title='Pessoas da comunidade'
-            list={pessoasFavoritas}
+            title='Seguidores da Comunidade Alura'
+            list={followersAlura}
           />
         </div>
       </MainGrid>
