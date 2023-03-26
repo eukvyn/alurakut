@@ -34,6 +34,13 @@ export default function Home() {
   const [followers, setFollowers] = React.useState([])
   const [followersAlura, setFollowersAlura] = React.useState([])
 
+  interface Community {
+    title: String
+    id: String
+    imageUrl: String
+    creatorSlug: String
+  }
+
   React.useEffect(() => {
     // GET followers githubUser
     fetch(`https://api.github.com/users/${githubUser}/followers`)
@@ -121,13 +128,29 @@ export default function Home() {
                 const dadosDoForm = new FormData(e.currentTarget)
 
                 const communityInput = {
-                  id: new Date().toISOString(),
                   title: dadosDoForm.get('title'),
-                  imageUrl: dadosDoForm.get('image'),
+                  image_url: dadosDoForm.get('image'),
+                  creator_slug: githubUser,
                 }
 
-                const communitiesUpdate = [...communities, communityInput]
-                setCommunities(communitiesUpdate)
+                fetch('api/communities', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(communityInput)
+                }).then(async (response) => {
+                  const register = await response.json();
+                  
+                  const community: Community = {
+                    title: register.data.title,
+                    id: register.data.id,
+                    imageUrl: register.data.image_url,
+                    creatorSlug: register.data.creator_slug
+                  }
+
+                  const communitiesUpdated = [...communities, community]
+                  setCommunities(communitiesUpdated)
+                })
+
               }}>
               <div>
                 <input

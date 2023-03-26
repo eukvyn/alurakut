@@ -3,7 +3,7 @@ import { ProfileRelationsBoxWrapper } from '../'
 
 function CommunityBox({ category, title, list }) {
     
-    const reduceList = list.slice(0, 6)
+    let reduceList = list.slice(0, 6)
 
     return (
         <ProfileRelationsBoxWrapper>
