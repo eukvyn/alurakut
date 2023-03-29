@@ -8,7 +8,9 @@
   "dependencies": {
     "@datocms/cma-client-browser": "^1.2.9",
     "@datocms/cma-client-node": "^1.2.9",
+    "jsonwebtoken": "^9.0.0",
     "next": "latest",
+    "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.5"
