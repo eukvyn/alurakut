@@ -1,86 +1,99 @@
-# Example app with styled-components
+# Título do projeto
 
-This example features how you use a different styling solution than [styled-jsx](https://github.com/vercel/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
+Um parágrafo da descrição do projeto vai aqui
 
-This example uses the Rust-based [SWC](https://nextjs.org/docs/advanced-features/compiler#styled-components) in Next.js for better performance than Babel.
+## 🚀 Começando
 
-Currently, only the `ssr` and `displayName` transforms have been implemented. These two transforms are the main requirement for using `styled-components` in Next.js.
+Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
-## Deploy your own
+Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-styled-components)
+### 📋 Pré-requisitos
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-components&project-name=with-styled-components&repository-name=with-styled-components)
+De que coisas você precisa para instalar o software e como instalá-lo?
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-styled-components with-styled-components-app
+```
+Dar exemplos
 ```
 
-```bash
-yarn create next-app --example with-styled-components with-styled-components-app
+### 🔧 Instalação
+
+Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+
+Diga como essa etapa será:
+
+```
+Dar exemplos
 ```
 
-```bash
-pnpm create next-app --example with-styled-components with-styled-components-app
+E repita:
+
+```
+Até finalizar
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
 
-### Try it on CodeSandbox
+## ⚙️ Executando os testes
 
-[Open this example on CodeSandbox](https://codesandbox.io/s/github/vercel/next.js/tree/canary/examples/with-styled-components)
+Explicar como executar os testes automatizados para este sistema.
 
-### Notes
+### 🔩 Analise os testes de ponta a ponta
 
-When wrapping a [Link](https://nextjs.org/docs/api-reference/next/link) from `next/link` within a styled-component, the [as](https://styled-components.com/docs/api#as-polymorphic-prop) prop provided by `styled` will collide with the Link's `as` prop and cause styled-components to throw an `Invalid tag` error. To avoid this, you can either use the recommended [forwardedAs](https://styled-components.com/docs/api#forwardedas-prop) prop from styled-components or use a different named prop to pass to a `styled` Link.
+Explique que eles verificam esses testes e porquê.
 
-<details>
-<summary>Click to expand workaround example</summary>
-<br />
-
-**components/StyledLink.js**
-
-```javascript
-import Link from 'next/link'
-import styled from 'styled-components'
-
-const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
-  </Link>
-)
-
-export default styled(StyledLink)`
-  color: #0075e0;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #40a9ff;
-  }
-
-  &:focus {
-    color: #40a9ff;
-    outline: none;
-    border: 0;
-  }
-`
+```
+Dar exemplos
 ```
 
-**pages/index.js**
+### ⌨️ E testes de estilo de codificação
 
-```javascript
-import StyledLink from '../components/StyledLink'
+Explique que eles verificam esses testes e porquê.
 
-export default () => (
-  <StyledLink href="/post/[pid]" forwardedAs="/post/abc">
-    First post
-  </StyledLink>
-)
+```
+Dar exemplos
 ```
 
-</details>
+## 📦 Implantação
+
+Adicione notas adicionais sobre como implantar isso em um sistema ativo
+
+## 🛠️ Construído com
+
+Mencione as ferramentas que você usou para criar seu projeto
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
+* [Maven](https://maven.apache.org/) - Gerente de Dependência
+* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
+
+## 🖇️ Colaborando
+
+Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoSobreContribuicoes) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
+
+## 📌 Versão
+
+Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
+
+## ✒️ Autores
+
+Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
+
+* **Um desenvolvedor** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
+* **Fulano De Tal** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
+
+Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
+
+## 📄 Licença
+
+Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
+
+## 🎁 Expressões de gratidão
+
+* Conte a outras pessoas sobre este projeto 📢;
+* Convide alguém da equipe para uma cerveja 🍺;
+* Um agradecimento publicamente 🫂;
+* etc.
+
+
+---
+⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊
