@@ -1,7 +1,9 @@
 import React from 'react'
 import nookies from 'nookies'
 import jwt from 'jsonwebtoken'
-import { Box, CommunityBox, MainGrid } from '../components'
+import { Box2, MainGrid } from '../components'
+import { BoxCommunity } from '../components/organisms'
+import { Box } from '../components/atoms'
 import {
   AlurakutMenu,
   AlurakutProfileSidebarMenuDefault,
@@ -10,7 +12,7 @@ import {
 
 function ProfileSidebar(propriedades) {
   return (
-    <Box as='aside'>
+    <Box2 as='aside'>
       <img
         src={`https://github.com/${propriedades.githubUser}.png`}
         style={{ borderRadius: '8px' }}
@@ -26,7 +28,7 @@ function ProfileSidebar(propriedades) {
       <hr />
 
       <AlurakutProfileSidebarMenuDefault />
-    </Box>
+    </Box2>
   )
 }
 
@@ -118,15 +120,15 @@ export default function Home(props) {
           <ProfileSidebar githubUser={githubUser} />
         </div>
         <div>
-          <Box
+          <Box2
             className='welcomeArea'
             style={{ gridArea: 'welcomeArea' }}>
             <h1 className='title'>Bem vindo(a)</h1>
 
             <OrkutNostalgicIconSet />
-          </Box>
+          </Box2>
 
-          <Box>
+          <Box2>
             <h2 className='subTitle'>O que você deseja fazer?</h2>
             <form
               onSubmit={function handleCriaComunidade(e) {
@@ -174,22 +176,22 @@ export default function Home(props) {
 
               <button>Criar comunidade</button>
             </form>
-          </Box>
+          </Box2>
         </div>
         <div
           className='profileRelationsArea'
           style={{ gridArea: 'profileRelationsArea' }}>
-          <CommunityBox
+          <BoxCommunity
             category='users'
             title='Seguidores'
             list={followers}
           />
-          <CommunityBox
+          <BoxCommunity
             category='communities'
             title='Comunidades'
             list={communities}
           />
-          <CommunityBox
+          <BoxCommunity
             category='communities'
             title='Seguidores da Comunidade Alura'
             list={followersAlura}

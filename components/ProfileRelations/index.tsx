@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import Box from '../Box';
 
-const ProfileRelationsBoxWrapper = styled(Box)`
+const ProfileRelationsBoxWrapper = styled.div`
   ul {
     display: grid;
     grid-gap: 8px;
