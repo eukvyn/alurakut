@@ -6,8 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.5",
     "@datocms/cma-client-browser": "^1.2.9",
     "@datocms/cma-client-node": "^1.2.9",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "framer-motion": "^10.11.2",
     "jsonwebtoken": "^9.0.0",
     "next": "latest",
     "nookies": "^2.5.2",
