@@ -1,86 +1,42 @@
-# Example app with styled-components
+# Alurakut
 
-This example features how you use a different styling solution than [styled-jsx](https://github.com/vercel/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
+O alurakut se propõe a recriar a ideia de interface e funcionalidades do antigo Orkut.
 
-This example uses the Rust-based [SWC](https://nextjs.org/docs/advanced-features/compiler#styled-components) in Next.js for better performance than Babel.
+### 🔧 Instalação
 
-Currently, only the `ssr` and `displayName` transforms have been implemented. These two transforms are the main requirement for using `styled-components` in Next.js.
+Você precisará clonar o projeto, execute:
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-styled-components)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-components&project-name=with-styled-components&repository-name=with-styled-components)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-styled-components with-styled-components-app
+```
+git clone https://github.com/eukvyn/alurakut.git
 ```
 
-```bash
-yarn create next-app --example with-styled-components with-styled-components-app
+Instale as dependências:
+
+```
+npm i
 ```
 
-```bash
-pnpm create next-app --example with-styled-components with-styled-components-app
+O projeto está pronto para rodar:
+
+```
+npm run dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## 📦 Implantação
 
-### Try it on CodeSandbox
+Esse projeto foi implementado na [Vercel](https://vercel.com/home?utm_source=next-site&utm_medium=banner&utm_campaign=home) e está disponível em: [link para o projeto](https://alurakut-eukvyn.vercel.app/)
 
-[Open this example on CodeSandbox](https://codesandbox.io/s/github/vercel/next.js/tree/canary/examples/with-styled-components)
+## 🛠️ Construído com
 
-### Notes
+* [Next](https://nextjs.org/) - O framework web usado
+* [Dato CMS](https://www.datocms.com/) - Hub central de criação e distribuição do conteúdo via API
 
-When wrapping a [Link](https://nextjs.org/docs/api-reference/next/link) from `next/link` within a styled-component, the [as](https://styled-components.com/docs/api#as-polymorphic-prop) prop provided by `styled` will collide with the Link's `as` prop and cause styled-components to throw an `Invalid tag` error. To avoid this, you can either use the recommended [forwardedAs](https://styled-components.com/docs/api#forwardedas-prop) prop from styled-components or use a different named prop to pass to a `styled` Link.
+## 🎁 Expressões de gratidão
 
-<details>
-<summary>Click to expand workaround example</summary>
-<br />
+* Siga meu perfil do [Github](www.github.com/eukvyn) 📢;
+* Siga meu perfil do [Linkedin](https://www.linkedin.com/in/kevin-almeida-desenvolvedor/) 🍺;
+* Um agradecimento publicamente à Alura pela Imersão de React e todo o conhecimento que ela proporcionou🫂;
 
-**components/StyledLink.js**
 
-```javascript
-import Link from 'next/link'
-import styled from 'styled-components'
-
-const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
-  </Link>
-)
-
-export default styled(StyledLink)`
-  color: #0075e0;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #40a9ff;
-  }
-
-  &:focus {
-    color: #40a9ff;
-    outline: none;
-    border: 0;
-  }
-`
-```
-
-**pages/index.js**
-
-```javascript
-import StyledLink from '../components/StyledLink'
-
-export default () => (
-  <StyledLink href="/post/[pid]" forwardedAs="/post/abc">
-    First post
-  </StyledLink>
-)
-```
-
-</details>
+---
+⌨️ com ❤️ por [Kevin Almeida](https://github.com/eukvyn) 😊
