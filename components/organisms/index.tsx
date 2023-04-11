@@ -1,0 +1,1 @@
+export { default as BoxCommunity } from './BoxCommunity/BoxCommunity'
