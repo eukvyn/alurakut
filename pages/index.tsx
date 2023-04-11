@@ -1,4 +1,6 @@
 import React from 'react'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 import { Box, CommunityBox, MainGrid } from '../components'
 import {
   AlurakutMenu,
@@ -28,8 +30,8 @@ function ProfileSidebar(propriedades) {
   )
 }
 
-export default function Home() {
-  const githubUser = 'eukvyn'
+export default function Home(props) {
+  const { githubUser } = props
   const [communities, setCommunities] = React.useState([])
   const [followers, setFollowers] = React.useState([])
   const [followersAlura, setFollowersAlura] = React.useState([])
@@ -48,15 +50,17 @@ export default function Home() {
         return response.json()
       })
       .then((response) => {
-        let _followers = []
-        response.map((follower) => {
-          _followers.push({
-            id: follower.id,
-            title: follower.login,
-            imageUrl: follower.avatar_url,
+        if (response.message != 'Not Found') {
+          let _followers = []
+          response.map((follower) => {
+            _followers.push({
+              id: follower.id,
+              title: follower.login,
+              imageUrl: follower.avatar_url,
+            })
           })
-        })
-        setFollowers(_followers)
+          setFollowers(_followers)
+        }
       })
 
     // GET followers Alura Community
@@ -97,10 +101,12 @@ export default function Home() {
           }
         }`,
       }),
-    }).then((response) => response.json()).then((response) => {
-      const communitiesDato = response.data.allCommunities
-      setCommunities(communitiesDato)
     })
+      .then((response) => response.json())
+      .then((response) => {
+        const communitiesDato = response.data.allCommunities
+        setCommunities(communitiesDato)
+      })
   }, [])
 
   return (
@@ -136,21 +142,20 @@ export default function Home() {
                 fetch('api/communities', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(communityInput)
+                  body: JSON.stringify(communityInput),
                 }).then(async (response) => {
-                  const register = await response.json();
-                  
+                  const register = await response.json()
+
                   const community: Community = {
                     title: register.data.title,
                     id: register.data.id,
                     imageUrl: register.data.image_url,
-                    creatorSlug: register.data.creator_slug
+                    creatorSlug: register.data.creator_slug,
                   }
 
                   const communitiesUpdated = [...communities, community]
                   setCommunities(communitiesUpdated)
                 })
-
               }}>
               <div>
                 <input
@@ -175,17 +180,17 @@ export default function Home() {
           className='profileRelationsArea'
           style={{ gridArea: 'profileRelationsArea' }}>
           <CommunityBox
-          category="users"
+            category='users'
             title='Seguidores'
             list={followers}
           />
           <CommunityBox
-            category="communities"
+            category='communities'
             title='Comunidades'
             list={communities}
           />
           <CommunityBox
-            category="communities"
+            category='communities'
             title='Seguidores da Comunidade Alura'
             list={followersAlura}
           />
@@ -193,4 +198,35 @@ export default function Home() {
       </MainGrid>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  const token = nookies.get(context).USER_TOKEN
+
+  const { isAuthenticated } = await fetch(
+    'https://alurakut.vercel.app/api/auth',
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  ).then((response) => response.json())
+
+  console.log('TESTE: ' + isAuthenticated)
+  
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  const { githubUser } = jwt.decode(token)
+  return {
+    props: {
+      githubUser,
+    },
+  }
 }
